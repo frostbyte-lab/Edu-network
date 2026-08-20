@@ -1,0 +1,11 @@
+{
+  "name": "edu-network",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Path-based static hosting structure for the EDU learning game platform.",
+  "scripts": {
+    "generate-index": "node scripts/generate-index.js",
+    "check-sizes": "node scripts/check-sizes.js",
+    "prepare-deploy": "npm run check-sizes && npm run generate-index"
+  }
+}
