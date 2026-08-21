@@ -1,0 +1,8 @@
+name = "edu-network"
+pages_build_output_dir = "."
+compatibility_date = "2026-08-21"
+
+[[d1_databases]]
+binding = "EDU_DB"
+database_name = "EDU"
+database_id = "5fc9965a-7f77-436e-943d-cf76ed8968d7"
