@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDU Network — Admin Panel</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --card: #141824;
+      --border: #243044;
+      --text: #e8eef8;
+      --muted: #8b9bb4;
+      --accent: #3b82f6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 1.15rem; font-weight: 600; }
+    header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+    header a:hover { color: var(--accent); }
+    main { padding: 20px 24px 48px; max-width: 1200px; margin: 0 auto; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .stat .label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .stat .value { font-size: 1.5rem; font-weight: 700; margin-top: 4px; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .tabs button {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .tabs button.active { background: var(--accent); border-color: var(--accent); }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .toolbar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    input, select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    button.btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+    tr:last-child td { border-bottom: none; }
+    .win { color: var(--green); }
+    .loss { color: #f87171; }
+    .muted { color: var(--muted); }
+    .err { color: #f87171; padding: 12px; }
+    code { background: #0f131c; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EDU Network — Admin Panel</h1>
+    <div>
+      <a href="/">Katalog</a> ·
+      <a href="/api/game/health" target="_blank">API Health</a>
+    </div>
+  </header>
+  <main>
+    <div class="stats" id="stats"></div>
+    <div class="tabs">
+      <button class="active" data-tab="players">Players</button>
+      <button data-tab="spins">Spins</button>
+      <button data-tab="history">History</button>
+      <button data-tab="top">Top Wins</button>
+    </div>
+
+    <section id="panel-players" class="panel active">
+      <div class="toolbar">
+        <input id="q-player" placeholder="Cari player_id..." />
+        <button class="btn" id="btn-players">Refresh</button>
+      </div>
+      <div id="tbl-players"></div>
+    </section>
+
+    <section id="panel-spins" class="panel">
+      <div class="toolbar">
+        <input id="q-spin-player" placeholder="Filter player_id" />
+        <input id="q-spin-game" placeholder="Filter game_id" />
+        <button class="btn" id="btn-spins">Refresh</button>
+      </div>
+      <div id="tbl-spins"></div>
+    </section>
+
+    <section id="panel-history" class="panel">
+      <div class="toolbar">
+        <input id="q-hist-player" placeholder="Filter player_id" />
+        <button class="btn" id="btn-history">Refresh</button>
+      </div>
+      <div id="tbl-history"></div>
+    </section>
+
+    <section id="panel-top" class="panel">
+      <div id="tbl-top"></div>
+    </section>
+  </main>
+
+  <script>
+    const API = location.origin;
+
+    async function get(path) {
+      const r = await fetch(API + path);
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || "API error");
+      return d;
+    }
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[c]);
+    }
+
+    async function loadStats() {
+      const d = await get("/api/admin/stats");
+      const s = d.stats;
+      document.getElementById("stats").innerHTML = [
+        ["Players", s.players],
+        ["Total Spins", s.spins],
+        ["Spins Today", s.spins_today],
+        ["Active Sessions", s.active_sessions],
+        ["Total Bet", s.total_bet],
+        ["Total Win", s.total_win],
+      ].map(([l, v]) => `<div class="stat"><div class="label">${l}</div><div class="value">${v}</div></div>`).join("");
+
+      const top = d.top_players || [];
+      document.getElementById("tbl-top").innerHTML = top.length
+        ? `<table><thead><tr><th>Player</th><th>Balance</th><th>Spins</th><th>Total Bet</th><th>Total Win</th></tr></thead>
+           <tbody>${top.map(p => `<tr>
+             <td><code>${esc(p.player_id)}</code></td>
+             <td>${p.balance}</td><td>${p.spins_count}</td>
+             <td>${p.total_bet}</td><td class="win">${p.total_win}</td>
+           </tr>`).join("")}</tbody></table>`
+        : `<p class="muted">Belum ada data.</p>`;
+    }
+
+    async function loadPlayers() {
+      const q = document.getElementById("q-player").value.trim();
+      const path = "/api/admin/players?limit=50" + (q ? "&q=" + encodeURIComponent(q) : "");
+      const d = await get(path);
+      const rows = d.players || [];
+      document.getElementById("tbl-players").innerHTML = rows.length
+        ? `<table><thead><tr><th>Player</th><th>Balance</th><th>Spins</th><th>Bet</th><th>Win</th><th>Updated</th></tr></thead>
+           <tbody>${rows.map(p => `<tr>
+             <td><code>${esc(p.player_id)}</code></td>
+             <td>${p.balance} ${esc(p.currency)}</td>
+             <td>${p.spins_count}</td><td>${p.total_bet}</td>
+             <td class="win">${p.total_win}</td>
+             <td class="muted">${esc(p.updated_at)}</td>
+           </tr>`).join("")}</tbody></table>
+           <p class="muted" style="margin-top:8px">Total: ${d.total}</p>`
+        : `<p class="muted">Tidak ada player.</p>`;
+    }
+
+    async function loadSpins() {
+      const p = document.getElementById("q-spin-player").value.trim();
+      const g = document.getElementById("q-spin-game").value.trim();
+      let path = "/api/admin/spins?limit=50";
+      if (p) path += "&player_id=" + encodeURIComponent(p);
+      if (g) path += "&game_id=" + encodeURIComponent(g);
+      const d = await get(path);
+      const rows = d.spins || [];
+      document.getElementById("tbl-spins").innerHTML = rows.length
+        ? `<table><thead><tr><th>ID</th><th>Player</th><th>Game</th><th>Bet</th><th>Win</th><th>Net</th><th>Symbols</th><th>Time</th></tr></thead>
+           <tbody>${rows.map(s => `<tr>
+             <td>${s.spin_id}</td>
+             <td><code>${esc(s.player_id)}</code></td>
+             <td>${esc(s.game_id)}</td>
+             <td>${s.bet}</td>
+             <td class="win">${s.win}</td>
+             <td class="${s.net >= 0 ? "win" : "loss"}">${s.net}</td>
+             <td>${esc((s.symbols || []).join(" · "))}</td>
+             <td class="muted">${esc(s.created_at)}</td>
+           </tr>`).join("")}</tbody></table>`
+        : `<p class="muted">Belum ada spin.</p>`;
+    }
+
+    async function loadHistory() {
+      const p = document.getElementById("q-hist-player").value.trim();
+      let path = "/api/admin/history?limit=50";
+      if (p) path += "&player_id=" + encodeURIComponent(p);
+      const d = await get(path);
+      const rows = d.history || [];
+      document.getElementById("tbl-history").innerHTML = rows.length
+        ? `<table><thead><tr><th>ID</th><th>Player</th><th>Game</th><th>Action</th><th>Amount</th><th>Balance</th><th>Time</th></tr></thead>
+           <tbody>${rows.map(h => `<tr>
+             <td>${h.id}</td>
+             <td><code>${esc(h.player_id)}</code></td>
+             <td>${esc(h.game_id)}</td>
+             <td>${esc(h.action)}</td>
+             <td>${h.amount}</td>
+             <td>${h.balance_after ?? "—"}</td>
+             <td class="muted">${esc(h.created_at)}</td>
+           </tr>`).join("")}</tbody></table>`
+        : `<p class="muted">Belum ada history.</p>`;
+    }
+
+    document.querySelectorAll(".tabs button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tabs button").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    document.getElementById("btn-players").onclick = () => loadPlayers().catch(showErr);
+    document.getElementById("btn-spins").onclick = () => loadSpins().catch(showErr);
+    document.getElementById("btn-history").onclick = () => loadHistory().catch(showErr);
+
+    function showErr(e) {
+      console.error(e);
+      alert(e.message || String(e));
+    }
+
+    Promise.all([loadStats(), loadPlayers(), loadSpins(), loadHistory()]).catch(showErr);
+    setInterval(() => {
+      loadStats().catch(() => {});
+    }, 30000);
+  </script>
+</body>
+</html>
