@@ -1,4 +1,4 @@
-name: wild bandit
+name: Deploy Wild Bandit to Cloudflare Pages
 
 on:
   push:
