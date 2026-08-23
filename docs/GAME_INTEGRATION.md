@@ -110,3 +110,19 @@ Content-Type: application/json
 Header opsional: `X-Admin-Key` (jika `ADMIN_KEY` di-set di Pages env).
 
 Player baru → `init` membaca `meta.initial_balance` dari `game_config`, kalau tidak ada → **0**.
+
+## 7. Saldo 0 = game tidak bisa jalan
+
+- Server menolak `spin` / `bet` jika saldo **0** → HTTP **402**, `code: "BALANCE_ZERO"`.
+- Jika saldo > 0 tapi kurang dari taruhan → HTTP **409**, `code: "BALANCE_INSUFFICIENT"`.
+- Client: `window.__EDU_PLAYABLE__` dan event `edu-blocked` saat saldo 0.
+
+Isi saldo (admin):
+```json
+POST /api/admin/balance
+{ "player_id": "player_xxx", "balance": 5000 }
+```
+Atau default player baru di game:
+```json
+{ "game_id": "game-12", "initial_balance": 1000 }
+```

@@ -48,8 +48,21 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
+    if (player.balance <= 0) {
+      return err("Saldo 0 — game tidak bisa dijalankan. Isi saldo lewat admin.", 402, {
+        code: "BALANCE_ZERO",
+        balance: 0,
+        playable: false,
+        required: amount,
+      });
+    }
     if (player.balance < amount) {
-      return err("Saldo poin tidak cukup", 409, { balance: player.balance, required: amount });
+      return err("Saldo poin tidak cukup", 409, {
+        code: "BALANCE_INSUFFICIENT",
+        balance: player.balance,
+        playable: false,
+        required: amount,
+      });
     }
 
     await writeHistory(db, {

@@ -80,7 +80,12 @@ window.__EDU_FORCE_BALANCE_ZERO__=true;
         var bal=state&&state.player?state.player.balance:0;
         zeroGlobals();
         try{ KEYS.forEach(function(k){ if(k in window) window[k]=bal; }); }catch(e){}
-        window.dispatchEvent(new CustomEvent("edu-balance",{detail:{balance:bal}}));
+        window.__EDU_PLAYABLE__ = bal > 0;
+        window.dispatchEvent(new CustomEvent("edu-balance",{detail:{balance:bal,playable:bal>0}}));
+        if(bal<=0){
+          console.warn("[EDU] Saldo 0 — game tidak bisa dijalankan. Isi via POST /api/admin/balance");
+          window.dispatchEvent(new CustomEvent("edu-blocked",{detail:{reason:"BALANCE_ZERO",balance:0}}));
+        }
       }).catch(function(e){ console.warn("[EDU]",e); });
     }catch(e){ console.warn("[EDU]",e); }
   }

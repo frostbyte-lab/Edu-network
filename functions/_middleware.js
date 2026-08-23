@@ -108,7 +108,12 @@ function balanceGuardScript(eduOrigin, gameId) {
         try{
           KEYS.forEach(function(k){ if(k in window) window[k]=bal; });
         }catch(e){}
-        window.dispatchEvent(new CustomEvent("edu-balance",{ detail:{ balance: bal, player: state && state.player } }));
+        window.__EDU_PLAYABLE__ = bal > 0;
+        window.dispatchEvent(new CustomEvent("edu-balance",{ detail:{ balance: bal, playable: bal > 0, player: state && state.player } }));
+        if (bal <= 0) {
+          console.warn("[EDU] Saldo 0 — game tidak bisa dijalankan");
+          window.dispatchEvent(new CustomEvent("edu-blocked",{ detail:{ reason: "BALANCE_ZERO", balance: 0 } }));
+        }
       }).catch(function(e){ console.warn("[EDU SDK] start", e); });
     }catch(e){ console.warn("[EDU SDK]", e); }
   }

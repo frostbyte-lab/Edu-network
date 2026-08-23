@@ -23,6 +23,7 @@ export async function onRequestGet({ request, env }) {
     return ok({
       player_id: player.player_id,
       balance: player.balance,
+      playable: (player.balance || 0) > 0,
       currency: player.currency,
       spins_count: player.spins_count,
       total_bet: player.total_bet,

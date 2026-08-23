@@ -76,7 +76,21 @@ export async function onRequestPost({ request, env }) {
         .prepare(`SELECT balance FROM game_players WHERE player_id = ?`)
         .bind(playerId)
         .first();
-      return err("Saldo poin tidak cukup", 409, { balance: p?.balance ?? 0, required: bet });
+      const bal = p?.balance ?? 0;
+      if (bal <= 0) {
+        return err("Saldo 0 — game tidak bisa dijalankan. Isi saldo lewat admin.", 402, {
+          code: "BALANCE_ZERO",
+          balance: 0,
+          playable: false,
+          required: bet,
+        });
+      }
+      return err("Saldo poin tidak cukup", 409, {
+        code: "BALANCE_INSUFFICIENT",
+        balance: bal,
+        playable: false,
+        required: bet,
+      });
     }
 
     const symbols = drawReels(symbolsList, 3);
