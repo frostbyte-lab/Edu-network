@@ -169,3 +169,26 @@ async function spin(playerId, bet, sessionId) {
 Terkonek dengan sistem:
 - GitHub: https://github.com/frostbyte-lab/Edu-network
 - Live: https://ea29118c.edu-network.pages.dev/
+
+## RNG level (1 / 2 / 3)
+
+Disimpan di `game_config.meta_json.rng_level`. Dipakai `/api/game/spin`.
+
+| Level | Nama | Efek server |
+|-------|------|-------------|
+| 1 | Down | Lebih sering kalah, payout ×0.7 |
+| 2 | Imbang | Acak adil (default) |
+| 3 | Menang | Lebih sering match, payout ×1.15 |
+
+Set via admin:
+```http
+POST /api/admin/balance
+{ "game_id": "game-12", "rng_level": 1 }
+```
+
+Atau bersama initial_balance:
+```json
+{ "game_id": "game-12", "initial_balance": 1000, "rng_level": 3 }
+```
+
+Override per request (opsional): body `rng_level` di `POST /api/game/spin`.

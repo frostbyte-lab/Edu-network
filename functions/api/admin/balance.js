@@ -54,6 +54,33 @@ export async function onRequestPost({ request, env }) {
   }
 
   try {
+
+    // Set rng_level saja
+    if (body.game_id != null && body.rng_level != null && body.initial_balance == null && body.player_id == null) {
+      const gameId = String(body.game_id).trim();
+      if (!validGameId(gameId)) return err("Invalid game_id", 400);
+      const lv = Number(body.rng_level);
+      if (lv !== 1 && lv !== 2 && lv !== 3) return err("rng_level must be 1, 2, or 3", 400);
+
+      const row = await db
+        .prepare(`SELECT game_id, meta_json FROM game_config WHERE game_id = ?`)
+        .bind(gameId)
+        .first();
+      let meta = {};
+      if (row?.meta_json) {
+        try { meta = JSON.parse(row.meta_json) || {}; } catch { meta = {}; }
+      }
+      meta.rng_level = lv;
+      if (row) {
+        await db.prepare(`UPDATE game_config SET meta_json = ?, updated_at = datetime('now') WHERE game_id = ?`)
+          .bind(JSON.stringify(meta), gameId).run();
+      } else {
+        await db.prepare(`INSERT INTO game_config (game_id, title, meta_json) VALUES (?, ?, ?)`)
+          .bind(gameId, gameId, JSON.stringify(meta)).run();
+      }
+      return ok({ game_id: gameId, rng_level: lv, message: "RNG level disimpan (1=down 2=imbang 3=menang)" });
+    }
+
     // Set initial_balance default untuk game (disimpan di meta_json)
     if (body.game_id != null && body.initial_balance != null) {
       const gameId = String(body.game_id).trim();
@@ -73,6 +100,7 @@ export async function onRequestPost({ request, env }) {
         try { meta = JSON.parse(row.meta_json) || {}; } catch { meta = {}; }
       }
       meta.initial_balance = initial;
+      if (body.rng_level === 1 || body.rng_level === 2 || body.rng_level === 3) meta.rng_level = Number(body.rng_level);
 
       if (row) {
         await db

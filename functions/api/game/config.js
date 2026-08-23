@@ -34,6 +34,7 @@ export async function onRequestGet({ request, env }) {
         features: ["freespin", "bonus", "wild", "scatter"],
         enabled: true,
         initial_balance: 0,
+        rng_level: 2,
         source: "fallback",
       });
     }
@@ -52,6 +53,7 @@ export async function onRequestGet({ request, env }) {
       enabled: !!row.enabled,
       meta: parseJsonField(row.meta_json, {}),
       initial_balance: (function(){ try { const m = parseJsonField(row.meta_json, {}); return Number.isInteger(m.initial_balance) ? m.initial_balance : 0; } catch { return 0; } })(),
+      rng_level: (function(){ try { const m = parseJsonField(row.meta_json, {}); const n = Number(m.rng_level); return n === 1 || n === 2 || n === 3 ? n : 2; } catch { return 2; } })(),
       updated_at: row.updated_at,
       source: "db",
     });

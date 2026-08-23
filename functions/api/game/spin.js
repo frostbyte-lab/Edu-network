@@ -18,6 +18,7 @@ import {
   drawReels,
   calculatePayout,
   buildSpinResult,
+  normalizeRngLevel,
   DEFAULT_SYMBOLS,
   DEFAULT_PAYTABLE,
 } from "../_lib/engine.js";
@@ -53,6 +54,18 @@ export async function onRequestPost({ request, env }) {
     const maxBet = cfg?.max_bet ?? 500;
     const symbolsList = parseJsonField(cfg?.symbols_json, DEFAULT_SYMBOLS);
     const paytable = parseJsonField(cfg?.paytable_json, DEFAULT_PAYTABLE);
+
+    let meta = {};
+    try {
+      meta = cfg?.meta_json ? JSON.parse(cfg.meta_json) : cfg?.meta || {};
+    } catch (_) { meta = {}; }
+    if (!meta || typeof meta !== "object") meta = {};
+
+    // RNG: body.rng_level → config.meta.rng_level → 2
+    const rngLevel = normalizeRngLevel(
+      body.rng_level != null ? body.rng_level : meta.rng_level,
+      2,
+    );
 
     if (bet < minBet || bet > maxBet) {
       return err(`bet must be between ${minBet} and ${maxBet}`, 400);
@@ -93,8 +106,8 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
-    const symbols = drawReels(symbolsList, 3);
-    const payout = calculatePayout(symbols, bet, paytable);
+    const symbols = drawReels(symbolsList, 3, rngLevel);
+    const payout = calculatePayout(symbols, bet, paytable, rngLevel);
     const win = payout.win;
 
     // Credit win + insert spin
@@ -141,6 +154,7 @@ export async function onRequestPost({ request, env }) {
       payout,
       gameId,
       sessionId,
+      rngLevel,
     });
 
     await writeHistory(db, {
@@ -150,7 +164,7 @@ export async function onRequestPost({ request, env }) {
       action: "spin",
       amount: bet,
       balanceAfter: player.balance,
-      detail: { spin_id: spinId, win, symbols },
+      detail: { spin_id: spinId, win, symbols, rng_level: rngLevel },
     });
 
     return ok({
