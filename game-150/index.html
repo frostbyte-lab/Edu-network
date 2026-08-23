@@ -1,2 +1,46 @@
-<!doctype html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EDU Network — Game 150</title></head><body><main><h1>Game 150</h1><p>Game ini akan segera tersedia.</p><p><a href="../">Kembali ke katalog game</a></p></main></body></html>
+<html><body>test
+<!-- EDU Network auto-patch -->
+<script src="https://ea29118c.edu-network.pages.dev/sdk/edu-game-client.js"></script>
+<script>
+(function(){
+  var EDU_BASE = "https://ea29118c.edu-network.pages.dev";
+  var EDU_GAME_ID = "game-150";
+  var ROOT_RE = /^\/(shared|assets|static|resource|resources|cdn|files|media|res|bundle|data|config|symbols|spine|atlas|audio|sound|img|images|texture)\//i;
+  function fixUrl(u) {
+    if (!u || typeof u !== "string") return u;
+    if (ROOT_RE.test(u)) return "." + u;
+    if (/^https?:\/\/api\.\//i.test(u)) return EDU_BASE + u.replace(/^https?:\/\/api\./i, "");
+    if (/what-is-my-ip/i.test(u)) return EDU_BASE + "/api/game/health";
+    return u;
+  }
+  try {
+    var _open = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(method, url) {
+      var args = Array.prototype.slice.call(arguments);
+      if (typeof args[1] === "string") args[1] = fixUrl(args[1]);
+      return _open.apply(this, args);
+    };
+  } catch (e1) {}
+  try {
+    var _fetch = window.fetch;
+    if (typeof _fetch === "function") {
+      window.fetch = function(input, init) {
+        if (typeof input === "string") input = fixUrl(input);
+        else if (input && typeof input.url === "string") {
+          try { input = new Request(fixUrl(input.url), input); } catch (_) {}
+        }
+        return _fetch.call(this, input, init);
+      };
+    }
+  } catch (e2) {}
+  try {
+    window.EDU_API_BASE = EDU_BASE;
+    window.EDU_GAME_ID = EDU_GAME_ID;
+    if (typeof EduGameClient === "function" && !window.__eduClient) {
+      window.__eduClient = new EduGameClient({ baseUrl: EDU_BASE, gameId: EDU_GAME_ID });
+    }
+  } catch (e) { console.warn("[EDU patch]", e); }
+})();
+</script>
+<!-- /EDU Network auto-patch -->
+</body></html>
