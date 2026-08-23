@@ -3,7 +3,7 @@
 ## 1. Domain API (wajib diset di game)
 
 ```js
-const API_BASE = "https://edu-network.pages.dev";
+const API_BASE = "https://ea29118c.edu-network.pages.dev";
 // atau relative jika game di-host di domain yang sama:
 // const API_BASE = "";
 ```
@@ -11,10 +11,10 @@ const API_BASE = "https://edu-network.pages.dev";
 ## 2. Cara cepat — pakai SDK
 
 ```html
-<script src="https://edu-network.pages.dev/sdk/edu-game-client.js"></script>
+<script src="https://ea29118c.edu-network.pages.dev/sdk/edu-game-client.js"></script>
 <script>
   const edu = new EduGameClient({
-    baseUrl: "https://edu-network.pages.dev",  // DOMAIN
+    baseUrl: "https://ea29118c.edu-network.pages.dev",  // DOMAIN
     gameId: "game-1",                          // id game ini
   });
 
@@ -47,14 +47,14 @@ const API_BASE = "https://edu-network.pages.dev";
 
 Semua write (init/spin/bonus/collect) **otomatis tersimpan di D1** dan muncul di:
 
-**Admin Panel:** https://edu-network.pages.dev/admin/
+**Admin Panel:** https://ea29118c.edu-network.pages.dev/admin/
 
 ## 4. Domain di dalam ZIP game (Game Collector)
 
 Saat edit game hasil collector, ganti base URL API ke:
 
 ```
-https://edu-network.pages.dev
+https://ea29118c.edu-network.pages.dev
 ```
 
 Contoh pola yang sering ada di game slot:
@@ -64,7 +64,7 @@ Contoh pola yang sering ada di game slot:
 const API = "https://provider-asli.com";
 
 // SESUDAH (EDU Network)
-const API = "https://edu-network.pages.dev";
+const API = "https://ea29118c.edu-network.pages.dev";
 ```
 
 Path yang dipakai game harus mengarah ke `/api/game/*` (bukan path provider lama).

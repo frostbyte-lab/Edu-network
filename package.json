@@ -6,6 +6,7 @@
   "scripts": {
     "generate-index": "node scripts/generate-index.js",
     "check-sizes": "node scripts/check-sizes.js",
-    "prepare-deploy": "npm run check-sizes && npm run generate-index"
+    "prepare-deploy": "npm run check-sizes && npm run generate-index",
+    "install-game": "node scripts/install-game.js"
   }
 }

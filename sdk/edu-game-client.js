@@ -1,10 +1,24 @@
 /**
  * EDU Network — Game Client SDK
- * <script src="https://edu-network.pages.dev/sdk/edu-game-client.js"></script>
+ * <script src="/sdk/edu-game-client.js"></script>
+ * Absolute: https://ea29118c.edu-network.pages.dev/sdk/edu-game-client.js
+ *
+ * Origin di-detect dari window.__EDU_ORIGIN__ (middleware) atau location.origin.
  */
 (function (global) {
   "use strict";
-  var DEFAULT_BASE = "https://edu-network.pages.dev";
+
+  function detectBase() {
+    try {
+      if (typeof window !== "undefined") {
+        if (window.__EDU_ORIGIN__) return String(window.__EDU_ORIGIN__).replace(/\/$/, "");
+        if (window.location && window.location.origin) return window.location.origin;
+      }
+    } catch (_) {}
+    return "https://ea29118c.edu-network.pages.dev";
+  }
+
+  var DEFAULT_BASE = detectBase();
 
   function uid(prefix) {
     var a = new Uint8Array(8);
@@ -28,8 +42,8 @@
 
   function EduGameClient(opts) {
     opts = opts || {};
-    this.baseUrl = (opts.baseUrl || DEFAULT_BASE).replace(/\/$/, "");
-    this.gameId = opts.gameId || "default";
+    this.baseUrl = (opts.baseUrl || detectBase()).replace(/\/$/, "");
+    this.gameId = opts.gameId || (typeof window !== "undefined" && window.__EDU_GAME_ID__) || "default";
     this.playerId = opts.playerId || loadPlayerId(opts.storageKey);
     this.sessionId = null;
     this.config = null;
