@@ -1,23 +1,39 @@
 #!/usr/bin/env node
 /**
- * Install extracted game package into game-N/ slot.
- * Usage: node scripts/install-game.js --slot 12 --from ./extracted
- *        node scripts/install-game.js --slot 12 --from ./game.zip
+ * Install extracted game into game-N/ + permanent EDU API patch.
+ *
+ * Usage:
+ *   node scripts/install-game.js --slot 12 --from ./extracted
+ *   node scripts/install-game.js --slot 12 --from ./game.zip
+ *   node scripts/install-game.js --slot 12 --from ./extracted --origin https://ea29118c.edu-network.pages.dev
+ *   node scripts/install-game.js --slot 12 --from ./extracted --domain https://old-provider.com
+ *   node scripts/install-game.js --slot 12 --from ./extracted --no-patch   # raw only
  */
 const fs = require("node:fs");
 const path = require("node:path");
 const { execSync } = require("node:child_process");
+const { patchGameDir, DEFAULT_ORIGIN } = require("./lib-patch-game.js");
 
 const MAX = 25 * 1024 * 1024;
 const root = path.resolve(__dirname, "..");
 
 function parseArgs(argv) {
-  const out = { slot: null, from: null, keep: false };
+  const out = {
+    slot: null,
+    from: null,
+    keep: false,
+    noPatch: false,
+    origin: DEFAULT_ORIGIN,
+    domains: [],
+  };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--slot") out.slot = Number(argv[++i]);
     else if (a === "--from") out.from = argv[++i];
     else if (a === "--keep") out.keep = true;
+    else if (a === "--no-patch") out.noPatch = true;
+    else if (a === "--origin") out.origin = argv[++i];
+    else if (a === "--domain") out.domains.push(argv[++i]);
   }
   return out;
 }
@@ -46,7 +62,7 @@ function emptyDir(dir) {
 function main() {
   const args = parseArgs(process.argv);
   if (!args.slot || args.slot < 1 || args.slot > 150 || !args.from) {
-    console.error("Usage: node scripts/install-game.js --slot N --from <dir|zip> [--keep]");
+    console.error("Usage: node scripts/install-game.js --slot N --from <dir|zip> [--origin URL] [--domain OLD_URL] [--no-patch] [--keep]");
     process.exit(1);
   }
 
@@ -102,10 +118,27 @@ function main() {
   }
 
   if (tmp) {
-    try { emptyDir(tmp); fs.rmdirSync(tmp); } catch (_) {}
+    try {
+      emptyDir(tmp);
+      fs.rmdirSync(tmp);
+    } catch (_) {}
   }
 
-  console.log(`OK: ${files.length} file → game-${args.slot}/`);
+  console.log(`Copied: ${files.length} file → game-${args.slot}/`);
+
+  if (!args.noPatch) {
+    const gameId = `game-${args.slot}`;
+    const stats = patchGameDir(dest, {
+      gameId,
+      eduOrigin: args.origin.replace(/\/$/, ""),
+      extraDomains: args.domains,
+    });
+    console.log(`Permanent patch: ${stats.filesPatched} file diubah, ${stats.htmlInjected} HTML inject SDK`);
+    console.log(`API origin: ${args.origin}`);
+  } else {
+    console.log("Skip patch (--no-patch). File tetap mentah; andalkan middleware on-the-fly.");
+  }
+
   console.log(`Preview: /game-${args.slot}/`);
   console.log("Lanjut: npm run prepare-deploy && git add game-" + args.slot + " && git commit && git push");
 }

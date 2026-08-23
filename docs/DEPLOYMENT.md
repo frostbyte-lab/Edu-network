@@ -48,3 +48,24 @@ Tidak perlu patch manual domain di dalam ZIP — middleware rewrite on-the-fly.
 - [ ] Network tab: request ke `/api/game/*` (bukan domain provider lama)
 - [ ] `window.edu` atau `window.__EDU_GAME_ID__` ada di console
 - [ ] Tidak ada file > 25 MB (`npm run check-sizes`)
+
+
+## Patch permanen (API custom di dalam file)
+
+Setelah `install-game`, file di `game-N/` **sudah** berisi:
+- domain API → EDU
+- saldo hardcode → 0
+- inject SDK + game_id
+
+Jadi kalau kamu **download ulang** dari repo/Pages, API custom sudah terpasang (tidak hanya on-the-fly).
+
+```bash
+# Install + patch otomatis
+node scripts/install-game.js --slot 12 --from ./extracted --domain https://provider-lama.com
+
+# Re-patch slot yang sudah ada
+node scripts/patch-game.js --slot 12 --domain https://provider-lama.com
+node scripts/patch-game.js --all
+```
+
+Middleware tetap jalan sebagai jaring pengaman untuk yang terlewat.
