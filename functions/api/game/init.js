@@ -29,17 +29,26 @@ export async function onRequestPost({ request, env }) {
 
   const playerId = typeof body.player_id === "string" ? body.player_id.trim() : "";
   const gameId = typeof body.game_id === "string" ? body.game_id.trim() : "default";
-  const initialBalance =
-    Number.isInteger(body.initial_balance) && body.initial_balance >= 0
-      ? body.initial_balance
-      : 10000;
-
   if (!validPlayerId(playerId)) return err("A valid player_id is required (3-64 chars)", 400);
   if (!validGameId(gameId)) return err("Invalid game_id", 400);
 
   try {
-    const player = await ensurePlayer(db, playerId, initialBalance);
     const cfg = await getConfig(db, gameId);
+    let meta = {};
+    try {
+      meta = cfg && cfg.meta_json ? JSON.parse(cfg.meta_json) : (cfg && cfg.meta) || {};
+    } catch (_) { meta = {}; }
+    if (!meta || typeof meta !== "object") meta = {};
+
+    // Prioritas: body.initial_balance → config.meta.initial_balance → 0
+    let initialBalance = 0;
+    if (Number.isInteger(body.initial_balance) && body.initial_balance >= 0) {
+      initialBalance = body.initial_balance;
+    } else if (Number.isInteger(meta.initial_balance) && meta.initial_balance >= 0) {
+      initialBalance = meta.initial_balance;
+    }
+
+    const player = await ensurePlayer(db, playerId, initialBalance);
 
     await writeHistory(db, {
       playerId,

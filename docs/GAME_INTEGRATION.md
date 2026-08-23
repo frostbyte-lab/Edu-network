@@ -79,3 +79,34 @@ Path yang dipakai game harus mengarah ke `/api/game/*` (bukan path provider lama
   - `GET /api/admin/history`
 
 Tidak perlu kode tambahan di game agar admin terisi — cukup panggil API game di atas.
+
+## 6. Saldo bawaan game → 0 (custom dari admin)
+
+Middleware memaksa angka saldo hardcode di client (mis. `balance = 9999999`) menjadi **0**.
+
+Saldo resmi di server default **0**. Bisa di-custom:
+
+### A) Default untuk player baru di 1 game
+```http
+POST /api/admin/balance
+Content-Type: application/json
+
+{ "game_id": "game-12", "initial_balance": 5000 }
+```
+
+### B) Set saldo player tertentu
+```http
+POST /api/admin/balance
+Content-Type: application/json
+
+{ "player_id": "player_abc", "balance": 1000 }
+```
+
+### C) Reset ke 0
+```json
+{ "player_id": "player_abc", "reset": true }
+```
+
+Header opsional: `X-Admin-Key` (jika `ADMIN_KEY` di-set di Pages env).
+
+Player baru → `init` membaca `meta.initial_balance` dari `game_config`, kalau tidak ada → **0**.

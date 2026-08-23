@@ -28,7 +28,7 @@ export function getQuery(request) {
 }
 
 /** Ensure player row exists; return player object */
-export async function ensurePlayer(db, playerId, initialBalance = 10000) {
+export async function ensurePlayer(db, playerId, initialBalance = 0) {
   await db
     .prepare(
       `INSERT OR IGNORE INTO game_players (player_id, balance) VALUES (?, ?)`

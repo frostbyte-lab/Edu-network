@@ -33,6 +33,7 @@ export async function onRequestGet({ request, env }) {
         paytable: DEFAULT_PAYTABLE,
         features: ["freespin", "bonus", "wild", "scatter"],
         enabled: true,
+        initial_balance: 0,
         source: "fallback",
       });
     }
@@ -50,6 +51,7 @@ export async function onRequestGet({ request, env }) {
       features: parseJsonField(row.features_json, []),
       enabled: !!row.enabled,
       meta: parseJsonField(row.meta_json, {}),
+      initial_balance: (function(){ try { const m = parseJsonField(row.meta_json, {}); return Number.isInteger(m.initial_balance) ? m.initial_balance : 0; } catch { return 0; } })(),
       updated_at: row.updated_at,
       source: "db",
     });
