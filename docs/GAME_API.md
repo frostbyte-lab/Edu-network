@@ -176,7 +176,7 @@ Disimpan di `game_config.meta_json.rng_level`. Dipakai `/api/game/spin`.
 
 | Level | Nama | Efek server |
 |-------|------|-------------|
-| 1 | Down | Lebih sering kalah, payout ×0.7 |
+| 1 | Down | Target ~80% kalah (force mismatch), sisa menang payout ×0.7 |
 | 2 | Imbang | Acak adil (default) |
 | 3 | Menang | Lebih sering match, payout ×1.15 |
 

@@ -28,16 +28,23 @@ function biased(rngLevel) {
 
 function drawSymbols(rngLevel = 2) {
   const lv = normalizeRng(rngLevel);
+  // Level 1: ~80% force lose (3 simbol berbeda)
+  if (lv === 1 && unit() < 0.8) {
+    const a = SYMBOLS[Math.floor(biased(1) * SYMBOLS.length) % SYMBOLS.length];
+    let b = SYMBOLS[Math.floor(biased(1) * SYMBOLS.length) % SYMBOLS.length];
+    let g = 0;
+    while (b === a && g++ < 16) b = SYMBOLS[Math.floor(biased(1) * SYMBOLS.length) % SYMBOLS.length];
+    if (b === a) b = SYMBOLS.find((s) => s !== a) || SYMBOLS[1];
+    let c = SYMBOLS[Math.floor(biased(1) * SYMBOLS.length) % SYMBOLS.length];
+    g = 0;
+    while ((c === a || c === b) && g++ < 16) c = SYMBOLS[Math.floor(biased(1) * SYMBOLS.length) % SYMBOLS.length];
+    if (c === a || c === b) c = SYMBOLS.find((s) => s !== a && s !== b) || SYMBOLS[2];
+    return [a, b, c];
+  }
   const symbols = [];
   for (let i = 0; i < 3; i++) {
     if (i > 0 && lv === 3 && biased(3) > 0.45) {
       symbols.push(symbols[0]);
-      continue;
-    }
-    if (i > 0 && lv === 1 && biased(1) < 0.55) {
-      const others = SYMBOLS.filter((s) => s !== symbols[0]);
-      const pool = others.length ? others : SYMBOLS;
-      symbols.push(pool[Math.floor(biased(1) * pool.length) % pool.length]);
       continue;
     }
     symbols.push(SYMBOLS[Math.floor(biased(lv) * SYMBOLS.length) % SYMBOLS.length]);

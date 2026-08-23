@@ -1,9 +1,9 @@
 /** Simple slot engine — symbols, spin, payout (virtual points only)
  *
  * RNG level (1|2|3):
- *  1 = down   — bias kalah (lebih sering lose, payout dipangkas)
+ *  1 = down   — target ~80% kalah (force mismatch), sisa 20% bisa menang (payout ×0.7)
  *  2 = imbang — fair crypto random
- *  3 = menang — bias menang (lebih sering pair/triple, payout sedikit naik)
+ *  3 = menang — bias menang (lebih sering match, payout ×1.15)
  */
 
 const DEFAULT_SYMBOLS = ["cherry", "lemon", "bell", "star", "seven", "wild", "scatter"];
@@ -18,7 +18,9 @@ const DEFAULT_PAYTABLE = {
   scatter: 0,
 };
 
-/** Normalize rng level to 1|2|3 */
+/** Level 1: probabilitas spin dipaksa kalah (tidak ada pair/triple) */
+const LEVEL1_LOSE_RATE = 0.8;
+
 export function normalizeRngLevel(value, fallback = 2) {
   const n = Number(value);
   if (n === 1 || n === 2 || n === 3) return n;
@@ -28,57 +30,70 @@ export function normalizeRngLevel(value, fallback = 2) {
 function cryptoUnit() {
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
-  return buf[0] / 4294967296; // [0, 1)
+  return buf[0] / 4294967296;
 }
 
-/**
- * Biased unit random based on rng level.
- * 1 down: skew low; 3 win: skew high; 2 fair.
- */
 export function biasedRandom(rngLevel = 2) {
   const x = cryptoUnit();
   const lv = normalizeRngLevel(rngLevel, 2);
-  if (lv === 1) return x * x; // more low values
-  if (lv === 3) return Math.sqrt(x); // more high values
+  if (lv === 1) return x * x;
+  if (lv === 3) return Math.sqrt(x);
   return x;
 }
 
+function pickSymbol(list, rngLevel) {
+  const idx = Math.floor(biasedRandom(rngLevel) * list.length) % list.length;
+  return list[idx];
+}
+
+/** Paksa 3 simbol berbeda (tanpa pair) — hasil pasti kalah di paytable 3-reel */
+function forceLoseSymbols(list) {
+  const pool = list.length >= 3 ? list : DEFAULT_SYMBOLS;
+  const a = pickSymbol(pool, 1);
+  let b = pickSymbol(pool, 1);
+  let guard = 0;
+  while ((b === a || b === "wild") && guard++ < 20) b = pickSymbol(pool, 1);
+  if (b === a) b = pool.find((s) => s !== a && s !== "wild") || pool[1] || a;
+
+  let c = pickSymbol(pool, 1);
+  guard = 0;
+  while ((c === a || c === b || c === "wild") && guard++ < 20) c = pickSymbol(pool, 1);
+  if (c === a || c === b) {
+    c = pool.find((s) => s !== a && s !== b && s !== "wild") || pool[2] || c;
+  }
+  return [a, b, c];
+}
+
 /**
- * Draw reels with optional RNG bias.
- * Level 1: higher chance of mismatched symbols
+ * Draw reels with RNG bias.
+ * Level 1: ~80% force lose (no matching symbols), 20% normal draw (masih bisa kalah alami)
  * Level 3: higher chance of matching symbols
  */
 export function drawReels(symbolList = DEFAULT_SYMBOLS, reelCount = 3, rngLevel = 2) {
   const list = Array.isArray(symbolList) && symbolList.length ? symbolList : DEFAULT_SYMBOLS;
   const lv = normalizeRngLevel(rngLevel, 2);
-  const symbols = [];
 
+  // Level 1 — 80% kalah dipaksa
+  if (lv === 1 && reelCount >= 3 && cryptoUnit() < LEVEL1_LOSE_RATE) {
+    return forceLoseSymbols(list).slice(0, reelCount);
+  }
+
+  const symbols = [];
   for (let i = 0; i < reelCount; i++) {
-    if (i > 0 && lv !== 2) {
-      const forceMatch = lv === 3 ? biasedRandom(3) > 0.45 : biasedRandom(1) > 0.82;
-      const forceMismatch = lv === 1 ? biasedRandom(1) < 0.55 : false;
-      if (lv === 3 && forceMatch) {
+    if (i > 0 && lv === 3) {
+      // ~55% chance copy first symbol → pair/triple lebih sering
+      if (biasedRandom(3) > 0.45) {
         symbols.push(symbols[0]);
         continue;
       }
-      if (lv === 1 && forceMismatch) {
-        // pick different from first when possible
-        const others = list.filter((s) => s !== symbols[0]);
-        const pool = others.length ? others : list;
-        const idx = Math.floor(biasedRandom(1) * pool.length) % pool.length;
-        symbols.push(pool[idx]);
-        continue;
-      }
     }
-    const idx = Math.floor(biasedRandom(lv) * list.length) % list.length;
-    symbols.push(list[idx]);
+    symbols.push(pickSymbol(list, lv));
   }
   return symbols;
 }
 
 /**
- * Calculate payout; apply soft multiplier by rng level.
- * Level 1: win * 0.7 (floor), level 3: win * 1.15 (ceil-ish)
+ * Calculate payout; level 1 trims wins ×0.7; level 3 boosts ×1.15
  */
 export function calculatePayout(symbols, bet, paytable = DEFAULT_PAYTABLE, rngLevel = 2) {
   if (!Array.isArray(symbols) || symbols.length < 3) {
@@ -143,4 +158,4 @@ export function buildSpinResult({ symbols, bet, payout, gameId, sessionId, rngLe
   };
 }
 
-export { DEFAULT_SYMBOLS, DEFAULT_PAYTABLE };
+export { DEFAULT_SYMBOLS, DEFAULT_PAYTABLE, LEVEL1_LOSE_RATE };
