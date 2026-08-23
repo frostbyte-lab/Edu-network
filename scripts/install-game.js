@@ -25,6 +25,7 @@ function parseArgs(argv) {
     noPatch: false,
     origin: DEFAULT_ORIGIN,
     domains: [],
+    name: null,
   };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
@@ -34,8 +35,33 @@ function parseArgs(argv) {
     else if (a === "--no-patch") out.noPatch = true;
     else if (a === "--origin") out.origin = argv[++i];
     else if (a === "--domain") out.domains.push(argv[++i]);
+    else if (a === "--name") out.name = argv[++i];
   }
   return out;
+}
+
+function guessNameFromSource(src, fromArg) {
+  const base = path.basename(fromArg || src).replace(/\.zip$/i, "");
+  const cleaned = base
+    .replace(/^game-?\d+[-_]?/i, "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!cleaned || /^\d+$/.test(cleaned)) return null;
+  return cleaned.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function writeMeta(dest, { slot, name, origin }) {
+  const meta = {
+    slot: slot,
+    game_id: "game-" + slot,
+    title: name || ("Game " + slot),
+    origin: origin,
+    patched_at: new Date().toISOString(),
+    published: true,
+  };
+  fs.writeFileSync(path.join(dest, "edu-meta.json"), JSON.stringify(meta, null, 2) + "\n", "utf8");
+  return meta;
 }
 
 function walkFiles(dir, base = dir, list = []) {
@@ -62,7 +88,7 @@ function emptyDir(dir) {
 function main() {
   const args = parseArgs(process.argv);
   if (!args.slot || args.slot < 1 || args.slot > 150 || !args.from) {
-    console.error("Usage: node scripts/install-game.js --slot N --from <dir|zip> [--origin URL] [--domain OLD_URL] [--no-patch] [--keep]");
+    console.error("Usage: node scripts/install-game.js --slot N --from <dir|zip> [--name \"Nama Game\"] [--origin URL] [--domain OLD_URL] [--no-patch] [--keep]");
     process.exit(1);
   }
 
@@ -125,6 +151,11 @@ function main() {
   }
 
   console.log(`Copied: ${files.length} file → game-${args.slot}/`);
+
+  const displayName = args.name || guessNameFromSource(src, args.from) || ("Game " + args.slot);
+  const meta = writeMeta(dest, { slot: args.slot, name: displayName, origin: args.origin.replace(/\/$/, "") });
+  console.log(`Nama publik: ${meta.title} (slot admin: ${meta.slot})`);
+
 
   if (!args.noPatch) {
     const gameId = `game-${args.slot}`;

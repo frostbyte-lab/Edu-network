@@ -69,3 +69,17 @@ node scripts/patch-game.js --all
 ```
 
 Middleware tetap jalan sebagai jaring pengaman untuk yang terlewat.
+
+
+## Nama di web utama, nomor di admin
+
+```bash
+node scripts/install-game.js --slot 12 --from ./fortune-tiger.zip --name "Fortune Tiger"
+npm run prepare-deploy
+```
+
+- **Web utama** (`/`): kartu menampilkan **nama** (Fortune Tiger), bukan nomor
+- **Admin / path teknis**: tetap `game-12` (slot 12)
+- Meta disimpan di `game-12/edu-meta.json`
+- Daftar admin: `admin/slots.json` (nomor + nama)
+- Slot kosong (placeholder tanpa meta) **tidak** tampil di katalog publik
