@@ -1,4 +1,4 @@
-name: Deploy Wild Bandit to Cloudflare Pages
+name: nemo to Cloudflare Pages
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 env:
   CLOUDFLARE_ACCOUNT_ID: 422ec98a647cf30f57b92420f8f20595
-  PAGES_PROJECT_NAME: wildbandoto   # <-- isi setelah project Pages dibuat
+  PAGES_PROJECT_NAME: nemo   # <-- isi setelah project Pages dibuat
 
 jobs:
   deploy:
