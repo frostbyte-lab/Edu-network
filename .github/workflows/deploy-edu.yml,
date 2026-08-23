@@ -1,4 +1,4 @@
-name: Deploy Game to Cloudflare Pages
+name: wild bandit
 
 on:
   push:
