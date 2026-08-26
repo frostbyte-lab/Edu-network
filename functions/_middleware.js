@@ -31,7 +31,7 @@ function extractGameIdFromPath(pathname) {
   const m = pathname.match(/^\/game-(\d{1,3})(?:\/|$)/i);
   if (!m) return null;
   const n = Number(m[1]);
-  if (n < 1 || n > 150) return null;
+  if (n < 1 || n > 999) return null;
   return `game-${n}`;
 }
 
