@@ -1,0 +1,18 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ OFFLINE COLLECTION REPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Files in package    : 236
+Tracking            : REMOVED
+External favicons   : REMOVED
+Blob UI sprites     : neutralized
+Asset map entries   : 1005
+Remaining external  : 0
+Offline Score       : 72
+Status              : OFFLINE PARTIAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Cara pakai:
+1. Load ZIP ini di Game Collector Pro
+2. Preview mode: Sandbox (bukan Web)
+3. Auto Repair sekali jika perlu
+4. API spin/balance = mock dari api-map.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,302 @@
+{
+  "generatedAt": "2026-08-23T15:26:53.738Z",
+  "criticalCount": 4,
+  "byKind": {
+    "other": [
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/loader/04.js",
+        "path": "assets/data/0002-04.js",
+        "size": 270631,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/996b5422dd.cee54.js?sign=1787498782-C54YvnbLfeYydnqdlNsqGD70GyNWOPXIY-0-fb8d31a81dd7e1c8f5d6253413cc41d8",
+        "path": "assets/data/0004-996b5422dd.cee54.js",
+        "size": 973757,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/b4ded45ece.65d39.jpg?sign=1787498782-Ex9KBwkZG0UpKquRwmgpptXxqiB9Dpv67sqxxkVp-0-153850aa29f13fc9173650fcd91cb80b",
+        "path": "assets/data/0006-b4ded45ece.65d39.jpg",
+        "size": 32568,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/16c66b844b.663ff.png?sign=1787498782-WUwPiHGKbS9vY1VwqNxWI8LQlI-0-84654d1f2e3bb9044ee779ef70de471c",
+        "path": "assets/data/0007-16c66b844b.663ff.png",
+        "size": 179786,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/2384416503.92033.jpg?sign=1787498782-bek2K4kxuUiB9Xdy4bQQa6VlfSaxUyJDcG5pr30NccwP7EWnxn3cElF0ZG4WJlBLnjo51nMmggI6ZLpv-0-95cdb0583c7953bb14fc6b05b98ac7b5",
+        "path": "assets/data/0009-2384416503.92033.jpg",
+        "size": 417075,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/3c32f1ac06.48adb.png?sign=1787498782-Lfu0b-0-a3a45250efc5bbef35300dee9f58088c",
+        "path": "assets/data/0010-3c32f1ac06.48adb.png",
+        "size": 4903,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/d9b258ff19.806e2.png?sign=1787498782-AyWO5sG7lAWLgYE9RoNTSfa1xKhWQ29qYKGPx8N5xsfkBLgpW6H1T5z2iivDlKWEVmz38b-0-8c1f34f3b87758ea3986a7dc00a9dc17",
+        "path": "assets/data/0011-d9b258ff19.806e2.png",
+        "size": 3069,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/aa3271fac5.6b345.ogg?sign=1787498783-j1agP2XBbHpxQs1P7MJWrY357qtYgGWH42b3AqYAC-0-4107ef79eae90269d89a792c09811f92",
+        "path": "assets/data/0013-aa3271fac5.6b345.ogg",
+        "size": 5371,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/b4d9192613/index.js?sign=1787498783-Fz3QUdr-0-f16566d652f8e84ef8aba9e385464e6a",
+        "path": "assets/data/0014-index.js",
+        "size": 92260,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/0b68fe0fe5/index.js?sign=1787498783-rDYrOGH4ydrIxaYSytLgNYZXj85rWuy9iEXsM7Hwj6faxzzqpJihb-0-a0be3017ad358f82161fc0bc1e249ba3",
+        "path": "assets/data/0015-index.js",
+        "size": 97423,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/4528468aab/index.js?sign=1787498783-N28jq6Tg8PgH09TdvNZuMGogGwfKbB2Wq3luVhb96dMfscjKGC3p5h32hhexgqx8nZ95iHcjRIOsTHFjrmi8SSa61-0-c45f1604bf724e22f303938fe37f7be3",
+        "path": "assets/data/0016-index.js",
+        "size": 55533,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/c03a2652ad/index.js?sign=1787498783-7AF7yk2vJTdXdEDEptUbHO4nxT3qz3Fwd-0-c411854b8e0105d909fa6eb81c19e0a9",
+        "path": "assets/data/0017-index.js",
+        "size": 2363,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/75d1870451/index.js?sign=1787498783-KUt6EZ3MMa2IWWXVS61WXvvHdLT4hzgKNGsctrYWCijO-0-f41ee20db5489660041d38f86eca1ad0",
+        "path": "assets/data/0018-index.js",
+        "size": 16140,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/c2fc9a6814/index.js?sign=1787498783-xplHVo7ZJuso2uNjO078-0-dd7b69bcf6688190adcf0c9d723ba004",
+        "path": "assets/data/0019-index.js",
+        "size": 119620,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/b85c56d865/index.js?sign=1787498783-sYw4mEwH2rxJQAjdFQO0DXbq3OQUW7K7ReWyGkQ0zVRruyA-0-4dc4c7f13beede0e135a5d5d82696873",
+        "path": "assets/data/0020-index.js",
+        "size": 16352,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/72c6a58ab7/index.js?sign=1787498783-KVJkN8wVGT06nhWHdu1QUkkjyvKIviiPrZKXu3sOHtGMC-0-a93025776139d421ab41a118ac635c15",
+        "path": "assets/data/0021-index.js",
+        "size": 96490,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/shell-res/ad/ad_adv_dfp_test.js?sign=1787498783-ezMLxCiHvNsS9gKM0dq9pjaCFwpE94kiKLTbJgAPs9HqOctczXDkzCx0H4e8k2UbBmkWLwmtV4Zf6AXIMGNFIMwBYaIbL2-0-b19e41ee25e7b3df536d028373224a72",
+        "path": "assets/data/0022-ad_adv_dfp_test.js",
+        "size": 181,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/fdcbe10535/index.js?sign=1787498783-oBzaJ1R74ElByHJFSmlOhp5O2UlVD7GHQE3OOTGJQpsF3T3i2mSLRcQDnkNuVAowRFuMs5J3UlnPKOZizp0YiMzlFh-0-fe600d01787171f84209c9c194ed5195",
+        "path": "assets/data/0023-index.js",
+        "size": 15890,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/0dd866175d/index.js?sign=1787498783-DeTpi1uA0c5wLvrkKYsPSDHKvhFT9LCx1PNoDH5izOkLBw83XnhUbDt03eSra735fCxp9-0-1550658515597a44e9b23a41b6b2b259",
+        "path": "assets/data/0024-index.js",
+        "size": 15923,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/8487273957/index.js?sign=1787498783-RO1c4HIQ3l7nixzfKm1gbEc0u4OXJfjLAbF5CVvEilHSwf06K7A3L7r0jarhDfcg4iarScE2kocQ8pk-0-578ea4b99d835287d6eeb2a1ebc5d7e4",
+        "path": "assets/data/0025-index.js",
+        "size": 88693,
+        "critical": false
+      }
+    ],
+    "json": [
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/index.json?sign=1787498782-pCJ0cPPewMuaO5mfiYNRI4ctply-0-2109977933be121e63de9fd3d83d7fae",
+        "path": "assets/data/0003-index.json",
+        "size": 14857,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/4686cca2c8.e8234.json?sign=1787498782-4YozoSgW9zvG7qFPNHgQPALDyiG-0-b4c6edc8924e8802b1b8c1f4ac3959fb",
+        "path": "assets/data/0005-4686cca2c8.e8234.json",
+        "size": 13825,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/984721902a/7bc6ed27dc.d0275.json?sign=1787498782-U7mXveTECf4BZFpKnGbljJ0SnMgkfb9ZCcWWSyeKSafjREUco5lpxEYqejWmq8oeEYMgXifDp77jPHkY5k3-0-c6c19062fd288bc815f61744bbc87e34",
+        "path": "assets/data/0008-7bc6ed27dc.d0275.json",
+        "size": 15515,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/336ce9b84e.d6831.json?sign=1787498782-2GQ-0-3d788204609a677490c3fe2d4c7b47dd",
+        "path": "assets/data/0012-336ce9b84e.d6831.json",
+        "size": 5078,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/75d1870451/df8e923416.5dd16.json?sign=1787498783-A41xaboZMPpndB2DQuCW6UT2LSGHAc8eb0-0-c043525208eafa7143b355daf3e02498",
+        "path": "assets/data/0028-df8e923416.5dd16.json",
+        "size": 13872,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/b4d9192613/bb2f03a000.9c240.json?sign=1787498784-vQYhp-0-8166771c78a9d6be4956cad0e20e7ec6",
+        "path": "assets/data/0040-bb2f03a000.9c240.json",
+        "size": 1344,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/0b68fe0fe5/ab7ff1fc74.45d89.json?sign=1787498784-Bogd3ytyxhjsWxFTd2rOUseg3e0gotCOBeAecDIXE9Lhdzw8E6sW6bzL-0-c8174406b35292e5aa1261c51a65fa7d",
+        "path": "assets/data/0041-ab7ff1fc74.45d89.json",
+        "size": 4485,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/c2fc9a6814/434e05d64e.21668.json?sign=1787498784-fFZXdnvGC2xIyuIyki2Xbqurud3yh2lv7KWVdo4BnuRcPKt9q6PG9UOlTh1SZy1fwslXRkF1Bj-0-82facce2d0cb986d4e17e38810a98c01",
+        "path": "assets/data/0042-434e05d64e.21668.json",
+        "size": 964,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/4528468aab/4f0edb7f7d.9d18b.json?sign=1787498784-wJEY4iuJZ1gWKuLRbMpGzE1uW5ArcpMfsZ2FqYZ6G6fYSf2N-0-c046a1720862a3801a0d10bd1f714864",
+        "path": "assets/data/0043-4f0edb7f7d.9d18b.json",
+        "size": 2470,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/75d1870451/65f012aae0.7a3c9.json?sign=1787498784-wsx2XafAI9O53YpTHgMuXgW4NnD8O8YGCQbO1ZumJ4bJjUmBps-0-750b33890fb03717566fbbe7a02d2ba5",
+        "path": "assets/data/0044-65f012aae0.7a3c9.json",
+        "size": 949,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/72c6a58ab7/d99b54453a.92fdf.json?sign=1787498784-Mxeoshy5MmiAJXt4t8KT7R6I8jyuVmtShx3igJBtsdhQuO-0-da53fa02dd135a6b3e5befd7f44d64a7",
+        "path": "assets/data/0045-d99b54453a.92fdf.json",
+        "size": 305,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/8487273957/ceff87f77b.67acb.json?sign=1787498784-Mi8hFIJHhK90AqGAkdIwEsYQpIOawzx2GuNTeiau8bfCwhEvUxXwiapbR-0-cc54e66e8342fe1d5caf1678c25de79d",
+        "path": "assets/data/0046-ceff87f77b.67acb.json",
+        "size": 222,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/6111ae8221.1b525.json?sign=1787498784-4IZro9PLynA1jBj3IW11n5smcAjl-0-9db6555d61cdd9f2c0b60cfb09cf8812",
+        "path": "assets/data/0047-6111ae8221.1b525.json",
+        "size": 746,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/c03a2652ad/builtins/internal/config.11dec.json?sign=1787498784-poalA44ybJUy4o4td9YYjwHWTmP9QZHzdrsQbHZIOxEUp8BIf5i0Y00D0leiN0ZKHXyDhnk7o3IfrBdEUk7g14q9VXorpOEjmn-0-f8b375c6d522a104ecaff8df21e72305",
+        "path": "assets/data/0048-config.11dec.json",
+        "size": 1608,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/assets/main/config.4c7e4.json?sign=1787498784-34nejtHK13mEJ4tioEgabbHeTC5sUydiBE2vpRrjv2jCc4NVbYxzVCu8qAGx7gXuqNklFKZM2sJYgZR7uf2kjYCZAKD7xvqJ-0-6113358b6f3a5797916c7567af78dab4",
+        "path": "assets/data/0050-config.4c7e4.json",
+        "size": 333,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/assets/resources/config.13b91.json?sign=1787498784-ccmijkyQfi1VpHX9Qt17BN1bUTElvVztuZTR4c9PUDn1nrwkPfS7vgC2QeybWAHu3qwQrRWGZ3YA9sZMDxov4690k9ra3-0-61c85afbd1501fd468ad291cbf51e1ce",
+        "path": "assets/data/0052-config.13b91.json",
+        "size": 129330,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/shared/c03a2652ad/builtins/internal/import/0b/0b6c4470e.ffd10.json?sign=1787498784-jGgJlFNfOxIfsZ3vB92gxOA8B8lIcWfwv5YAVj1KwK8jRiim2WHIMlSTR2YB3IFlGrWC0r945Hev5JdIyH-0-f5cee02b4ba21e710d74339bd56dcc63",
+        "path": "assets/data/0054-0b6c4470e.ffd10.json",
+        "size": 140960,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/assets/main/import/96/96350ac4-3e79-4bf5-b1fd-2fc076d9bace.64983.json?sign=1787498784-aKZpxkTfWaoDkaiOK3KgpgWWmddRQGbboXTmWXfT8x0lpZwfkhOad4QB2U9hLdurJ9tNH5CLxwHlXQ2sJ86E2K91cCyGqGwh-0-9a6330ffed0038dad5abe67157d6084e",
+        "path": "assets/data/0057-96350ac4-3e79-4bf5-b1fd-2fc076d9bace.64983.json",
+        "size": 3936,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/assets/resources/import/0c/0cfea2405.197cd.json?sign=1787498784-Ld8M0T83yn8y5TcdOd7OwW17PlBfCYLbiXOQIBYHTf0rqZkMEihs4sLcHCEiRBQM6Im-0-a45bc4547748fb4597656a6a63bbce59",
+        "path": "assets/data/0058-0cfea2405.197cd.json",
+        "size": 22508,
+        "critical": false
+      },
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/104/assets/resources/import/03/0308fb880.0934c.json?sign=1787498784-fj4C39asjtzZ63J15VaeyZL69EZhxgNNi4HchxIe5c3vOQVDFbYEmx0RjxhJ0FKk7A1CD80yCC1qqLtkMThare5ML-0-9102a1623ef69bbd27a2686e420dcd24",
+        "path": "assets/data/0059-0308fb880.0934c.json",
+        "size": 4903,
+        "critical": false
+      }
+    ],
+    "session": [
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/web-api/auth/session/v2/verifySession",
+        "path": "assets/data/0069-session-verifySession.json",
+        "size": 890,
+        "critical": true
+      }
+    ],
+    "launch": [
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/game-api/wild-bandito/v4/GameInfo/Get",
+        "path": "assets/data/0071-Get",
+        "size": 235,
+        "critical": true
+      }
+    ],
+    "balance": [
+      {
+        "url": "https://ea29118c.edu-network.pages.dev/web-api/game-proxy/v2/GameWallet/Get",
+        "path": "assets/data/0236-balance-Get.json",
+        "size": 233,
+        "critical": true
+      }
+    ]
+  },
+  "profile": {
+    "spinKeywords": [
+      "spin",
+      "putar",
+      "roll",
+      "bet",
+      "pasang",
+      "place bet",
+      "spin now",
+      "auto spin",
+      "max bet"
+    ],
+    "historyKeywords": [
+      "history",
+      "riwayat",
+      "record",
+      "bet history",
+      "game history",
+      "round history"
+    ],
+    "apiPaths": [],
+    "apiHosts": []
+  },
+  "autoInteract": {
+    "autoSpins": 3,
+    "autoHistory": true,
+    "spinDelayMs": 2200
+  }
+}
