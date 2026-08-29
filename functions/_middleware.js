@@ -73,6 +73,33 @@ function rewriteText(text, eduOrigin) {
   return out;
 }
 
+const PROVIDER_BOOTSTRAP_FIXTURES = {
+  "/web-api/auth/session/v2/verifySession": ["/game-1/assets/data/0069-session-verifySession.json", "application/json"],
+  "/web-api/game-proxy/v2/GameName/Get": ["/game-1/assets/data/0070-json-Get.json", "application/json"],
+  "/web-api/game-proxy/v2/Resources/GetByResourcesTypeIds": ["/game-1/assets/data/0235-json-GetByResourcesTypeIds.json", "application/json"],
+  "/web-api/game-proxy/v2/GameWallet/Get": ["/game-1/assets/data/0236-balance-Get.json", "application/json"],
+  "/game-api/wild-bandito/v4/GameInfo/Get": ["/game-1/assets/data/0071-Get", "application/octet-stream"],
+};
+
+async function providerBootstrapResponse(context) {
+  const url = new URL(context.request.url);
+  const fixture = PROVIDER_BOOTSTRAP_FIXTURES[url.pathname];
+  if (!fixture || context.request.method === "OPTIONS") return null;
+  const assets = context.env && context.env.ASSETS;
+  if (!assets || typeof assets.fetch !== "function") return null;
+  try {
+    const source = await assets.fetch(new Request(new URL(fixture[0], url.origin)));
+    if (!source.ok) return null;
+    const headers = new Headers(source.headers);
+    headers.set("Content-Type", fixture[1]);
+    headers.set("Cache-Control", "no-store");
+    headers.set("Access-Control-Allow-Origin", "*");
+    return new Response(source.body, { status: 200, headers });
+  } catch (_) {
+    return null;
+  }
+}
+
 function balanceGuardScript(eduOrigin, gameId) {
   return `<script>
 (function(){
@@ -155,6 +182,9 @@ export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
   const pathname = url.pathname;
+
+  const providerCompat = await providerBootstrapResponse(context);
+  if (providerCompat) return providerCompat;
 
   if (request.method === "OPTIONS") {
     return new Response(null, {
