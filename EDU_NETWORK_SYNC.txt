@@ -1,0 +1,46 @@
+EDU NETWORK SYNC CONTRACT
+==========================
+
+This file is the integration contract shared by Edu-network, Game Collector Pro, and captured ZIP packages.
+
+HOSTING
+-------
+Deploy each extracted package under a numeric Pages path: /game-N/. Keep all captured HTML, JS, CSS, image, audio, font, and data assets local to the package. Do not depend on expiring provider CDN signatures.
+
+API BASE
+--------
+Use the same-origin EduNetwork Pages domain. The authoritative game API is:
+GET  /api/game/config?game_id=game-N
+POST /api/game/init
+POST /api/game/session
+GET  /api/game/balance?player_id=...
+POST /api/game/bet
+POST /api/game/spin
+GET  /api/game/result?spin_id=...
+GET  /api/game/history?player_id=...&game_id=game-N
+POST /api/game/collect
+POST /api/game/bonus
+
+REQUEST IDENTITY
+----------------
+Every game request must carry player_id and game_id. Session-aware operations must also carry session_id. EduGameClient in /sdk/edu-game-client.js is the reference client implementation.
+
+MAPPING FROM CAPTURED WILD BANDITO
+----------------------------------
+Provider verifySession maps to init/session.
+Provider GameName/Get maps to config.
+Provider GameWallet/Get maps to balance.
+Provider Resources/GetByResourcesTypeIds maps to local ZIP data and config.
+Provider bet/spin/result/history calls require an explicit schema adapter; URL replacement alone is not sufficient.
+
+SECURITY AND EDUCATIONAL MODE
+-----------------------------
+Provider credentials, real-money balance, signed CDN URLs, and license/DRM flows must not be copied into the hosted package. EduNetwork owns the virtual balance and D1 history. A new player starts at zero until authorized admin/teacher configuration provisions educational points.
+
+DEPLOYMENT VERIFICATION
+-----------------------
+Run npm run prepare-deploy. Verify config, init, session, balance, bet, spin, result, history, and collect on the selected game-N path. Record the slot, deployment commit, API origin, package version, and deployment timestamp in the deployment history.
+
+LIMITATION
+----------
+A captured snapshot cannot recreate a provider backend or bypass login, DRM, license servers, anti-cheat, CAPTCHA, or access controls.

@@ -122,7 +122,14 @@ function balanceGuardScript(eduOrigin, gameId) {
     var s=document.createElement("script");
     s.src=(window.__EDU_ORIGIN__||"")+"/sdk/edu-game-client.js";
     s.defer=true;
-    s.onload=bootSdk;
+    s.onload=function(){
+      var a=document.createElement("script");
+      a.src=(window.__EDU_ORIGIN__||"")+"/sdk/edu-network-adapter.js";
+      a.defer=true;
+      a.onload=bootSdk;
+      a.onerror=bootSdk;
+      document.head.appendChild(a);
+    };
     document.head.appendChild(s);
   }else{
     if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", bootSdk);
