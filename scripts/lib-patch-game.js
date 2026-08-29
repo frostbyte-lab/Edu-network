@@ -39,8 +39,14 @@ function zeroClientBalances(text) {
   return out;
 }
 
+function normalizeLocalAssetPaths(text) {
+  // Collector ZIP dapat membawa path yang sudah diprefix lalu dipatch ulang.
+  // Normalisasi ini mengubah assets/images/0243-assets/images/0243-x menjadi assets/images/0243-x.
+  return text.replace(/assets\/(images|data)\/(\d+)-assets\/\1\/\2-/gi, "assets/$1/$2-");
+}
+
 function rewriteDomains(text, eduOrigin) {
-  let out = text;
+  let out = normalizeLocalAssetPaths(text);
   for (const re of OLD_DOMAIN_PATTERNS) {
     out = out.replace(re, eduOrigin);
   }
@@ -124,7 +130,7 @@ function patchGameDir(destDir, { gameId, eduOrigin = DEFAULT_ORIGIN, extraDomain
       let text = fs.readFileSync(full, "utf8");
       const before = text;
 
-      let out = text;
+      let out = normalizeLocalAssetPaths(text);
       for (const re of domains) out = out.replace(re, eduOrigin);
       out = out.replace(
         /(["'`])https?:\/\/[^"'`]+(\/api\/(?:game|slot|admin)(?:\/[^"'`]*)?)\1/gi,
@@ -155,6 +161,7 @@ module.exports = {
   DEFAULT_ORIGIN,
   zeroClientBalances,
   rewriteDomains,
+  normalizeLocalAssetPaths,
   injectSdkHtml,
   isTextFile,
 };
