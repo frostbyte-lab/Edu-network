@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-29T16:14:05.687Z",
+  "target": "https://m.eajzzxhro.com/104/index.html?ot=ca7094186b309ee149c55c8822e7ecf2&l=en&btt=2&or=21novodx%3Dzveuuscmj%3Dxjh&__hv=2fMEQCICuqoNGFMML4fGBdQE%2BkWN6hW4%2FfORGq%2Fnk1ZEMnawwmAiAxGYxJjOCWQZyBSVILpJeMljpfcPHLJNuUZN5itlB12A%3D%3D&__sv=010401YytG6oT6vOl81kKt_NDwR6QjynyruQC7y9kpWiV7QEg",
+  "status": "MANUAL_ACTION_REQUIRED",
+  "blockers": [
+    {
+      "kind": "drm_or_license",
+      "severity": "critical",
+      "message": "DRM atau license server terdeteksi; replikasi penuh memerlukan hak dan integrasi resmi.",
+      "evidence": []
+    },
+    {
+      "kind": "network_failures",
+      "severity": "medium",
+      "message": "Sebagian resource gagal diambil saat capture.",
+      "evidence": [
+        "https://www.google-analytics.com/g/collect?v=2&tid=G-7PY6GFGBXW&gtm=45je68q1v9180640860z8863865246za20gzb863865246zd863865246&_p=1788019994290&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=524493685.1788019995&frm=0&ngs=1&pscdl=noapi&rcb=15&sr=1280x800&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Windows&uapv=10.0&uaw=0&ul=en-us&_s=1&tag_exp=115938466~115938468~118897920~118897930~120385423~120763597&dl=https%3A%2F%2Fm.eajzzxhro.com%2F104%2Findex.html%3Fot%3Dca7094186b309ee149c55c8822e7ecf2%26l%3Den%26btt%3D2%26or%3D21novodx%253Dzveuuscmj%253Dxjh%26__hv%3D(redacted)%26__sv%3D(redacted)&sid=1788019994&sct=1&seg=0&dt=Wild%20Bandito&en=page_view&_fv=1&_ss=1&ep.app_name=wild%20bandito&ep.app_version=5.2.1.0%2F7.3.0%2F7.4.0-rc.5&up.user_agent=Chrome%2F121.0.0.0&tfd=726",
+        "https://www.google-analytics.com/g/collect?v=2&tid=G-7PY6GFGBXW&gtm=45je68q1v9180640860z8863865246za20gzb863865246zd863865246&_p=1788019994290&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=524493685.1788019995&frm=0&ngs=1&pscdl=noapi&rcb=15&sr=1280x800&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Windows&uapv=10.0&uaw=0&ul=en-us&_s=2&tag_exp=115938466~115938468~118897920~118897930~120385423~120763597&dl=https%3A%2F%2Fm.eajzzxhro.com%2F104%2Findex.html%3Fot%3Dca7094186b309ee149c55c8822e7ecf2%26l%3Den%26btt%3D2%26or%3D21novodx%253Dzveuuscmj%253Dxjh%26__hv%3D(redacted)%26__sv%3D(redacted)&sid=1788019994&sct=1&seg=0&dt=Wild%20Bandito&en=ogg_test&ep.app_name=wild%20bandito&ep.app_version=5.2.1.0%2F7.3.0%2F7.4.0-rc.5&ep.event_category=compat_check&ep.event_label=4_na&_et=360&tfd=6091"
+      ]
+    }
+  ],
+  "failedRequests": [
+    {
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-7PY6GFGBXW&gtm=45je68q1v9180640860z8863865246za20gzb863865246zd863865246&_p=1788019994290&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=524493685.1788019995&frm=0&ngs=1&pscdl=noapi&rcb=15&sr=1280x800&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Windows&uapv=10.0&uaw=0&ul=en-us&_s=1&tag_exp=115938466~115938468~118897920~118897930~120385423~120763597&dl=https%3A%2F%2Fm.eajzzxhro.com%2F104%2Findex.html%3Fot%3Dca7094186b309ee149c55c8822e7ecf2%26l%3Den%26btt%3D2%26or%3D21novodx%253Dzveuuscmj%253Dxjh%26__hv%3D(redacted)%26__sv%3D(redacted)&sid=1788019994&sct=1&seg=0&dt=Wild%20Bandito&en=page_view&_fv=1&_ss=1&ep.app_name=wild%20bandito&ep.app_version=5.2.1.0%2F7.3.0%2F7.4.0-rc.5&up.user_agent=Chrome%2F121.0.0.0&tfd=726",
+      "type": "fetch",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-7PY6GFGBXW&gtm=45je68q1v9180640860z8863865246za20gzb863865246zd863865246&_p=1788019994290&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=524493685.1788019995&frm=0&ngs=1&pscdl=noapi&rcb=15&sr=1280x800&uaa=x86&uab=64&uafvl=Not%253DA%253FBrand%3B99.0.0.0%7CHeadlessChrome%3B151.0.7922.34%7CChromium%3B151.0.7922.34&uam=&uamb=0&uap=Windows&uapv=10.0&uaw=0&ul=en-us&_s=2&tag_exp=115938466~115938468~118897920~118897930~120385423~120763597&dl=https%3A%2F%2Fm.eajzzxhro.com%2F104%2Findex.html%3Fot%3Dca7094186b309ee149c55c8822e7ecf2%26l%3Den%26btt%3D2%26or%3D21novodx%253Dzveuuscmj%253Dxjh%26__hv%3D(redacted)%26__sv%3D(redacted)&sid=1788019994&sct=1&seg=0&dt=Wild%20Bandito&en=ogg_test&ep.app_name=wild%20bandito&ep.app_version=5.2.1.0%2F7.3.0%2F7.4.0-rc.5&ep.event_category=compat_check&ep.event_label=4_na&_et=360&tfd=6091",
+      "type": "fetch",
+      "method": "POST",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "proactiveStaticAssets": {
+    "candidates": 97,
+    "fetched": 8,
+    "reused": 89,
+    "failed": 0,
+    "details": [
+      "GET 39949c54de.346f3.png?sign=1788019995-fyrDXcHIsLUDBcNrxUTz6hstbHZAx5EpjZofEC4MKpt → assets/images/0237-39949c54de.346f3.png",
+      "GET baf5b0685a.139a6.png?sign=1788019995-KLkClNN27BrxxdtT2C3tFZneqkYsXpMFukr0JlhJ4A6 → assets/images/0238-baf5b0685a.139a6.png",
+      "GET ad654e2861.7e1ef.png?sign=1788019995-0gKiPLnNhaNmqkAupmNxDCrYVmvUwFYWHQDgRgvD6hn → assets/images/0239-ad654e2861.7e1ef.png",
+      "GET 482b589ed4.1ec3c.png?sign=1788019995-xmBLCDAykjwjVHgbCXzoHIW4shJLzpRjI-0-11d9d15 → assets/images/0240-482b589ed4.1ec3c.png",
+      "GET 12ab63a920.ab38f.png?sign=1788019995-qbwSoMo0hKIKBj5di6am39nNTk3dou01H62Ru5oCKCy → assets/images/0241-12ab63a920.ab38f.png",
+      "GET 4a544af5ef.ac1b8.png?sign=1788019995-9CFlWiuiBBRSkcEJvvXQYNv28XrWr462OqW3Im33RAZ → assets/images/0242-4a544af5ef.ac1b8.png",
+      "GET favicon.ico → assets/images/0243-favicon.ico",
+      "GET favicon-48.png → assets/images/0244-favicon-48.png"
+    ]
+  },
+  "realtime": {
+    "sessions": 0,
+    "framesReceived": 0,
+    "framesSent": 0
+  }
+}

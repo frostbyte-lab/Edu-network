@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "enabled": true,
+  "source": "github-actions-collector",
+  "apiMap": "api-map.json",
+  "note": "Mock/replay preparation only; not a production backend."
+}

@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "enabled": false,
+  "licenseRef": "",
+  "challengeManualComplete": false,
+  "mockOffline": true,
+  "targetHost": "m.eajzzxhro.com",
+  "note": "Self-attestation metadata; verify license independently before distribution."
+}
