@@ -83,6 +83,35 @@ const PROVIDER_BOOTSTRAP_FIXTURES = {
 
 async function providerBootstrapResponse(context) {
   const url = new URL(context.request.url);
+  const form = await context.request.clone().formData().catch(() => new FormData());
+  const externalToken = String(form.get("otk") || form.get("tk") || "demo").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 48) || "demo";
+  const playerId = `wb_${externalToken.slice(-24)}`;
+  const gameId = "game-1";
+  const nativeJson = async (path, body) => {
+    const response = await fetch(new Request(new URL(path, url.origin), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(body || {}),
+    }));
+    return response.json();
+  };
+
+  // Native EduNetwork bridge: provider bootstrap calls are translated to live Edu API.
+  if (url.pathname === "/web-api/auth/session/v2/verifySession") {
+    const init = await nativeJson("/api/game/init", { player_id: playerId, game_id: gameId, initial_balance: 1000 });
+    const session = await nativeJson("/api/game/session", { player_id: playerId, game_id: gameId });
+    if (init && init.ok && session && session.ok) {
+      return new Response(JSON.stringify({ dt: { oj: { jid: 1 }, pid: playerId, pcd: "", tk: session.session.session_id, st: 1, geu: "game-api/wild-bandito/", lau: "/game-api/lobby/", bau: "web-api/game-proxy/", cc: "PGC", cs: "", nkn: "", gm: [{ gid: 104, msdt: Date.now(), medt: Date.now(), st: 1 }], uiogc: { as: init.player.balance }, ec: [], occ: { rurl: "", tcm: "You are playing Demo.", tsc: 1000000, ttp: 43200, tlb: "Continue", trb: "Quit" }, gcv: "1.1.0.5", ioph: "edu-native", sdn: "", jc: { as: init.player.balance } }, err: null }), { status: 200, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
+    }
+  }
+  if (url.pathname === "/web-api/game-proxy/v2/GameName/Get") {
+    return new Response(JSON.stringify({ dt: { "31": "Wild Bandito" }, err: null }), { status: 200, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
+  }
+  if (url.pathname === "/web-api/game-proxy/v2/GameWallet/Get") {
+    const data = await fetch(new Request(new URL(`/api/game/balance?player_id=${encodeURIComponent(playerId)}`, url.origin), { headers: { Accept: "application/json" } })).then(r => r.json()).catch(() => null);
+    const balance = Number(data && data.balance || 0);
+    return new Response(JSON.stringify({ dt: { cc: "PGC", tb: balance, pb: 0, cb: balance, tbb: 0, tfgb: 0, rfgc: 0, inbe: false, infge: false, iebe: false, iefge: false, ch: { k: "0_C", cid: 0, cb: balance }, p: null, ocr: null, bwc: 0, fgwc: 0 }, err: null }), { status: 200, headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
+  }
   const fixture = PROVIDER_BOOTSTRAP_FIXTURES[url.pathname];
   if (!fixture || context.request.method === "OPTIONS") return null;
   const assets = context.env && context.env.ASSETS;
